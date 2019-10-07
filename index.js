@@ -6,6 +6,7 @@ module.exports = function(styleApi) {
     hasOnlyNamespaceMember,
     isAbsoluteModule,
     isRelativeModule,
+    isScopedModule,
     moduleName,
     not,
     startsWithLowerCase,
@@ -13,6 +14,12 @@ module.exports = function(styleApi) {
     startsWith,
     naturally
   } = styleApi;
+
+  function equals(name) {
+    return text => {
+      return text === name;
+    };
+  }
 
   function isTypeModule(imported) {
     return imported.type === "import-type";
@@ -26,7 +33,10 @@ module.exports = function(styleApi) {
           imported.moduleName.indexOf("/") > 0)) ||
       imported.moduleName === "actions" ||
       imported.moduleName === "actionTypes" ||
-      startsWithUpperCase(imported.moduleName)
+      imported.moduleName === "errors" ||
+      imported.moduleName === "reducers" ||
+      (imported.moduleName.indexOf(".") !== 0 &&
+        startsWithUpperCase(imported.moduleName))
     );
   }
 
@@ -43,7 +53,7 @@ module.exports = function(styleApi) {
     {
       match: and(
         hasDefaultMember,
-        moduleName(startsWith("react")),
+        moduleName(equals("react")),
         not(isTypeModule)
       ),
       sort: moduleName(naturally)
@@ -51,7 +61,7 @@ module.exports = function(styleApi) {
 
     // import {foo} from "react-*"
     {
-      match: and(moduleName(startsWith("react")), not(isTypeModule)),
+      match: and(moduleName(equals("react-native"))),
       sort: moduleName(naturally)
     },
     { separator: true },
@@ -66,7 +76,7 @@ module.exports = function(styleApi) {
     // import foo from "bar";
     {
       match: and(
-        isAbsoluteModule,
+        or(isAbsoluteModule, isScopedModule),
         not(isTypeModule),
         not(isWayfinderModule),
         moduleName(startsWithLowerCase)
