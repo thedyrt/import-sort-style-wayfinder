@@ -1,6 +1,6 @@
 {
   "name": "import-sort-style-wayfinder",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Style for automatically sorting imports",
   "main": "index.js",
   "author": "Bill Scheidel <bscheidel@thedyrt.com",

@@ -1,6 +1,7 @@
 module.exports = function(styleApi) {
   const {
     and,
+    or,
     hasDefaultMember,
     hasNoMember,
     hasOnlyNamespaceMember,
