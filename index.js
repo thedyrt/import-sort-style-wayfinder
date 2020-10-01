@@ -30,12 +30,24 @@ module.exports = function(styleApi) {
     return (
       (!isTypeModule(imported) &&
         (imported.moduleName.indexOf(".") !== 0 &&
-          imported.moduleName.indexOf("@") !== 0 &&
           imported.moduleName.indexOf("/") > 0)) ||
-      imported.moduleName === "actions" ||
-      imported.moduleName === "actionTypes" ||
-      imported.moduleName === "errors" ||
-      imported.moduleName === "reducers" ||
+      imported.moduleName === "@actions" ||
+      imported.moduleName === "@actionTypes" ||
+      imported.moduleName === "@api" ||
+      imported.moduleName === "@components" ||
+      imported.moduleName === "@config" ||
+      imported.moduleName === "@constants" ||
+      imported.moduleName === "@deepLink" ||
+      imported.moduleName === "@errors" ||
+      imported.moduleName === "@hooks" ||
+      imported.moduleName === "@middleware" ||
+      imported.moduleName === "@reducers" ||
+      imported.moduleName === "@package.json" ||
+      imported.moduleName === "@screens" ||
+      imported.moduleName === "@storage" ||
+      imported.moduleName === "@services" ||
+      imported.moduleName === "@themes" ||
+      imported.moduleName === "@utils" ||
       (imported.moduleName.indexOf(".") !== 0 &&
         startsWithUpperCase(imported.moduleName))
     );
