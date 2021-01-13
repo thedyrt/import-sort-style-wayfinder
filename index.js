@@ -27,30 +27,26 @@ module.exports = function(styleApi) {
   }
 
   function isWayfinderModule(imported) {
-    return (
-      (!isTypeModule(imported) &&
-        (imported.moduleName.indexOf(".") !== 0 &&
-          imported.moduleName.indexOf("/") > 0)) ||
-      imported.moduleName === "@actions" ||
-      imported.moduleName === "@actionTypes" ||
-      imported.moduleName === "@api" ||
-      imported.moduleName === "@components" ||
-      imported.moduleName === "@config" ||
-      imported.moduleName === "@constants" ||
-      imported.moduleName === "@deepLink" ||
-      imported.moduleName === "@errors" ||
-      imported.moduleName === "@hooks" ||
-      imported.moduleName === "@middleware" ||
-      imported.moduleName === "@reducers" ||
-      imported.moduleName === "@package.json" ||
-      imported.moduleName === "@screens" ||
-      imported.moduleName === "@storage" ||
-      imported.moduleName === "@services" ||
-      imported.moduleName === "@themes" ||
-      imported.moduleName === "@utils" ||
-      (imported.moduleName.indexOf(".") !== 0 &&
-        startsWithUpperCase(imported.moduleName))
-    );
+    console.log(imported.moduleName.split('/')[0])
+    const moduleName = imported.moduleName.split('/')[0];
+    return ["@actions",
+      "@actionTypes",
+      "@api",
+      "@components",
+      "@config",
+      "@constants",
+      "@deepLink",
+      "@errors",
+      "@hooks",
+      "@middleware",
+      "@reducers",
+      "@package.json",
+      "@screens",
+      "@storage",
+      "@services",
+      "@themes",
+      "@utils"
+    ].includes(moduleName)
   }
 
   return [
@@ -109,8 +105,8 @@ module.exports = function(styleApi) {
     {
       match: and(
         isWayfinderModule,
-        not(moduleName(startsWith("component"))),
-        not(moduleName(startsWith("screens")))
+        not(moduleName(startsWith("@component"))),
+        not(moduleName(startsWith("@screens")))
       ),
       sort: moduleName(naturally)
     },
@@ -118,14 +114,14 @@ module.exports = function(styleApi) {
 
     // import { bar } from "screens/bar";
     {
-      match: and(isWayfinderModule, moduleName(startsWith("screens"))),
+      match: and(isWayfinderModule, moduleName(startsWith("@screens"))),
       sort: moduleName(naturally)
     },
     { separator: true },
 
     // import { bar } from "components/bar";
     {
-      match: and(isWayfinderModule, moduleName(startsWith("component"))),
+      match: and(isWayfinderModule, moduleName(startsWith("@component"))),
       sort: moduleName(naturally)
     },
     { separator: true },
