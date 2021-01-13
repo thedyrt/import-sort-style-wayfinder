@@ -27,7 +27,6 @@ module.exports = function(styleApi) {
   }
 
   function isWayfinderModule(imported) {
-    console.log(imported.moduleName.split('/')[0])
     const moduleName = imported.moduleName.split('/')[0];
     return ["@actions",
       "@actionTypes",
